@@ -171,11 +171,11 @@ def forward_selection(X,y,tol=0.001):
     Devuelve las columnas seleccionadas con sus datos, para el train y el test 
     '''
     
-    X= pd.DataFrame(data=X) 
+    #X= pd.DataFrame(data=X, columns = boston['feature_names']) 
     
-    Y = pd.DataFrame(data=y)
+    #Y = pd.DataFrame(data=y)
     
-    X_train, X_test, y_train, y_test = train_test_split(X,Y,random_state=15)
+    X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=15)
     
     ## Convertirlos en panda data frame: 
     
@@ -206,7 +206,7 @@ def forward_selection(X,y,tol=0.001):
             #Agrego la columna perteneciente al mejor R cuadrado a mis variables seleccionadas:
             col_select_train= pd.DataFrame(data=X_train.iloc[:,max_index])
             col_select_test= pd.DataFrame(data=X_test.iloc[:,max_index])
-            print('columnas del modelo seleccionado: ', col_select_train.columns)
+            #print('columnas del modelo seleccionado: ', col_select_train.columns)
             
             
             #Eliminar la columna de X_train y X_test
@@ -238,13 +238,13 @@ def forward_selection(X,y,tol=0.001):
             #Me quedo con el mejor R_Cuadrado: 
             max_R_2_ant = max_R_2
             max_R_2 = max(R_cuadrado)
-            print('R cuadrado seleccionado es de: ', max_R_2)
+            #print('R cuadrado seleccionado es de: ', max_R_2)
             max_index = R_cuadrado.index(max_R_2)
 
             #Agrego la columna perteneciente al mejor R cuadrado a mis variables seleccionadas:
             col_select_train= pd.concat([col_select_train, X_train.iloc[:,max_index] ], axis=1)
             col_select_test= pd.concat([col_select_test, X_test.iloc[:,max_index] ], axis=1)
-            print('columnas del modelo seleccionado: ', col_select_train.columns)
+            #print('columnas del modelo seleccionado: ', col_select_train.columns)
             
             #col_select_train.append(X_train[:,max_index])
             #col_select_test.append(X_test[:,max_index])
@@ -254,4 +254,5 @@ def forward_selection(X,y,tol=0.001):
             X_test.drop(X_test.columns[max_index],axis=1,inplace=True)
 
     
+    print('columnas del modelo seleccionado: ', col_select_train.columns)
     return col_select_train, col_select_test
